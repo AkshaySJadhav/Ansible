@@ -145,4 +145,16 @@ In Ansible, conditions allow you to control when a task, block, or role runs, ba
   when: user == 'admin' or user == 'dev'
 ```
 
+## Ansible loops:
 
+In Ansible, loops let you repeat a task multiple times with different items. The most common looping method is using the loop keyword, but there are others like with_items, with_dict, with_nested, etc.
+```
+- name: Install multiple packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - nginx
+    - git
+    - curl
+```
