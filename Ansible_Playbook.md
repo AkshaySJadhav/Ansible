@@ -84,4 +84,30 @@ There are 2 plays in above playbook and each of them have two tasks.
 - `Yum` , 'service' , 'script' are the modules in the above playbooks.
 
 
+### Verifying the Playbooks:
 
+- Verifying Ansible playbooks helps prevent configuration errors and ensures they execute as intended.
+- It reduces the risk of downtime and service disruptions by catching issues before deployment.
+- Verification ensures idempotency and security, avoiding unnecessary changes and unsafe practices.
+- It supports compliance, improves team collaboration, and saves time by identifying problems early.
+
+These are modes Ansible offers:
+
+1. <b>Normal Mode</b>: This is the default mode where Ansible executes tasks and applies actual changes to the target systems.
+
+2. <b>Check Mode (--check)</b>: Also known as "dry run" mode, it simulates the execution of the playbook without making any changes, allowing you to preview what would happen.
+
+3. <b>Diff Mode (--diff)</b>: Shows the differences between the current state and the proposed changes, useful especially for files and templates when used with --check or normal mode.
+
+4. <b>Syntax Check Mode (--syntax-check)</b>: This will verify the syntax error from the Playbook file.
+
+5. <b>Verbose Mode</b> (-v, -vv, -vvv, -vvvv): Provides detailed output about what Ansible is doing, helpful for debugging and understanding task execution.
+
+### Ansible-lint tool:
+
+ansible-lint is a command-line tool used to check Ansible playbooks, roles, and tasks for best practices and potential issues. 
+
+ ```
+# ansible-lint playbook.yml 
+  ```
+This command checks playbook.yml for problems and lists them with helpful explanations.
