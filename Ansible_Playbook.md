@@ -111,3 +111,38 @@ ansible-lint is a command-line tool used to check Ansible playbooks, roles, and 
 # ansible-lint playbook.yml 
   ```
 This command checks playbook.yml for problems and lists them with helpful explanations.
+
+
+### Ansible Conditions
+
+In Ansible, conditions allow you to control when a task, block, or role runs, based on variables, facts, or expressions. This is typically done using the `when` keyword.
+
+🔹 Basic `when` condition
+```
+- name: Install nginx only on Ubuntu
+  apt:
+    name: nginx
+    state: present
+  when: ansible_facts['os_family'] == "Debian"
+```
+
+🔹 Multiple Conditions (AND logic)
+
+```
+- name: Install only if OS is Debian and memory is more than 1GB
+  debug:
+    msg: "Meets all conditions"
+  when:
+    - ansible_facts['os_family'] == "Debian"
+    - ansible_facts['memtotal_mb'] > 1024
+```
+
+🔹 OR Conditions
+```
+- name: Run if user is admin or dev
+  debug:
+    msg: "User is admin or dev"
+  when: user == 'admin' or user == 'dev'
+```
+
+
