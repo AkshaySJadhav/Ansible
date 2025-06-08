@@ -232,3 +232,22 @@ Create a playbook use-rhel-role.yml in the parent directory:
 ```
 
 **Run it with**: `ansible-playbook -i inventory use-rhel-role.yml`
+
+
+# Ansible Collection.
+
+#### 📦 What Is an Ansible Collection?
+
+An Ansible collection is a packaging format that bundles multiple types of Ansible content together: <br>
+✅ Roles <br>
+🧰 Modules (custom plugins)<br>
+🎛️ Playbooks<br>
+🏷️ Plugins (lookup, filter, inventory, connection, etc.)<br>
+📚 Documentation and tests <br>
+
+Collections are the preferred way to organize and distribute content in Ansible 2.9+.
+
+**Example:** Cisco collection can be used to gain an access to the specialized functionalities required to automate your network infrastructure effectively. Once you have installed it, you can utilize the modules and roles provided by the network.cisco collection in your playbooks and benefit from the specialized functionality it offers.
+
+
+This is how you install the Ansible collection `ansible-galaxy collection install network.cisco`
