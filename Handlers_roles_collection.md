@@ -85,3 +85,150 @@ In Ansible, a handler is a special type of task that runs only when notified by 
         name: myapp
         state: restarted
 ```
+
+# Ansible Roles
+
+An Ansible role is a standardized way to organize and reuse Ansible automation content. Roles help you break down complex playbooks into smaller, reusable components, making your infrastructure code cleaner, more modular, and easier to manage.
+
+#### 🧱 Structure of an Ansible Role
+
+Ansible roles have a defined directory structure. Here's a basic layout:
+```
+my_role/
+├── defaults/
+│   └── main.yml           # Default variables
+├── files/
+│   └── example.conf       # Static files to copy
+├── handlers/
+│   └── main.yml           # Handlers (e.g., service restarts)
+├── meta/
+│   └── main.yml           # Role metadata (dependencies, etc.)
+├── tasks/
+│   └── main.yml           # Main list of tasks to execute
+├── templates/
+│   └── example.conf.j2    # Jinja2 templates
+├── tests/
+│   ├── inventory
+│   └── test.yml           # Sample playbook for testing
+├── vars/
+│   └── main.yml           # Variables with higher priority than defaults
+```
+
+#### ✅ Using a Role in a Playbook
+
+
+Lets create a role for a following playbook with the help of Ansible-Galaxy.
+
+```
+---
+- name: Yum module demo on RHEL-based systems
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Install httpd (Apache web server)
+      yum: name: httpd state: present
+
+    - name: Install multiple packages
+      yum:
+        name:
+          - git
+          - wget
+        state: present
+
+    - name: Update a specific package (e.g., bash)
+      yum: name: bash state: latest
+
+    - name: Remove a package (e.g., telnet)
+      yum: name: telnet state: absent
+
+```
+
+
+
+#### 🌐 What Is Ansible Galaxy?
+
+Ansible Galaxy is the official community hub for sharing and downloading Ansible roles and collections. It allows you to:
+
+    🔄 Reuse roles and collections created by others
+    📦 Share your own roles
+    🧩 Install roles from GitHub or Galaxy directly
+    📚 Browse community-contributed automation content
+
+Website: https://galaxy.ansible.com
+
+
+#### 📁 1. Directory Structure for rhel-role
+
+```
+# ansible-galaxy init rhel-roles
+- Role rhel-roles was created successfully
+```
+
+This will create the following directories:
+
+```
+rhel-role/
+├── defaults/
+│   └── main.yml
+├── files/
+├── handlers/
+│   └── main.yml
+├── meta/
+│   └── main.yml
+├── tasks/
+│   └── main.yml     <-- We'll edit this
+├── templates/
+├── tests/
+│   ├── inventory
+│   └── test.yml     <-- Optional: test playbook
+├── vars/
+│   └── main.yml
+```
+
+#### ✍️ 2. Edit tasks/main.yml
+
+Replace rhel-role/tasks/main.yml with the following content:
+
+```
+---
+# tasks file for rhel-role
+
+- name: Install httpd (Apache web server)
+  yum:
+    name: httpd
+    state: present
+
+- name: Install multiple packages
+  yum:
+    name:
+      - git
+      - wget
+    state: present
+
+- name: Update a specific package (e.g., bash)
+  yum:
+    name: bash
+    state: latest
+
+- name: Remove a package (e.g., telnet)
+  yum:
+    name: telnet
+    state: absent
+```
+
+
+#### ▶️ 3. Use the Role in a Playbook
+
+Create a playbook use-rhel-role.yml in the parent directory:
+
+```
+---
+- name: Apply rhel-role on RHEL systems
+  hosts: all
+  become: yes
+  roles:
+    - rhel-role
+```
+
+**Run it with**: `ansible-playbook -i inventory use-rhel-role.yml`
