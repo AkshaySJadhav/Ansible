@@ -94,13 +94,65 @@ An Ansible module is a reusable, standalone script that Ansible uses to perform 
 > Requires WinRM configuration on the Windows host.
 
 
-### 🧱 Example by Module
+### 🧱 Example by Module:
+
+Modules used in below code:-
+
+1. Script.
+2. lineinfile.
+3. user.
 
 ```
-- name: Install Apache
-  apt:
-    name: apache2
-    state: present
+- name: 'hosts'
+  hosts: all
+  become: yes
+  tasks:
+    - name: 'Execute a script'
+      script: '/tmp/install_script.sh'
+    - name: 'Start httpd service'
+      service:
+        name: 'httpd'
+        state: 'started'
+    - name: "Update /var/www/html/index.html"
+      lineinfile:
+        path: /var/www/html/index.html
+        line: "Welcome to ansible-beginning course"
+        create: true
+    - name: "web_user"
+      user:
+        name: 'web_user'
+        uid: 1040
+        group: 'developers'                              
 ```
 
+Output:
+```
+[bob@student-node playbooks]$ ansible-playbook -i inventory playbook.yaml 
+
+PLAY [hosts] **********************************************************************************************************************************
+
+TASK [Gathering Facts] ************************************************************************************************************************
+ok: [node01]
+ok: [node02]
+
+TASK [Execute a script] ***********************************************************************************************************************
+changed: [node01]
+changed: [node02]
+
+TASK [Start httpd service] ********************************************************************************************************************
+ok: [node01]
+ok: [node02]
+
+TASK [Update /var/www/html/index.html] ********************************************************************************************************
+ok: [node01]
+ok: [node02]
+
+TASK [web_user] *******************************************************************************************************************************
+changed: [node02]
+changed: [node01]
+
+PLAY RECAP ************************************************************************************************************************************
+node01                     : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+node02                     : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+```
 
