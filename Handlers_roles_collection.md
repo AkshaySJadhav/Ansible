@@ -249,5 +249,6 @@ Collections are the preferred way to organize and distribute content in Ansible 
 
 **Example:** Cisco collection can be used to gain an access to the specialized functionalities required to automate your network infrastructure effectively. Once you have installed it, you can utilize the modules and roles provided by the network.cisco collection in your playbooks and benefit from the specialized functionality it offers.
 
+amazon.aws - Managining the AWS resources.
 
 This is how you install the Ansible collection `ansible-galaxy collection install network.cisco`
